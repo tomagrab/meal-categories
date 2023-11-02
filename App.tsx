@@ -1,21 +1,41 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoriesScreen from "./Screens/Categories/CategoriesScreen";
+import MealsOverview from "./Screens/MealsOverview/MealsOverview";
+import { RootStackParamList } from "./Types/Types";
+import { MyTheme } from "./Constants/NavigationTheme/NavigationTheme";
+import MealDetail from "./Screens/MealDetail/MealDetail";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Categories" component={CategoriesScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    <NavigationContainer theme={MyTheme}>
+      <Stack.Navigator
+        screenOptions={{
+          headerBackTitleVisible: false,
+        }}
+      >
+        <Stack.Screen
+          name="Categories"
+          component={CategoriesScreen}
+          options={{
+            headerTitle: "Meal Categories",
+          }}
+        />
+        <Stack.Screen
+          name="Meals"
+          component={MealsOverview}
+          options={{ title: "Meals" }}
+        />
+        <Stack.Screen
+          name="MealDetail"
+          component={MealDetail}
+          options={{ title: "Preparation" }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
