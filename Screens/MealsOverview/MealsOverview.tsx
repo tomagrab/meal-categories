@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../Types/Types";
 import Meal from "../../models/meal";
 import MealItem from "../../components/Layout/Meals/MealItem/MealItem";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 type MealsOverviewProps = NativeStackScreenProps<RootStackParamList, "Meals">;
 
@@ -15,7 +15,7 @@ export default function MealsOverview({
   const categoryId = route?.params?.categoryId;
   const meals = MEALS.filter((meal) => meal.categoryIds.includes(categoryId));
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const categoryTitle = CATEGORIES.find(
       (category) => category.id === categoryId
     )?.title;

@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { RootStackParamList } from "../../Types/Types";
 import { MEALS } from "../../Data/dummy-data";
 import { ColorScheme } from "../../Constants/ColorScheme/ColorScheme";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 type MealDetailProps = NativeStackScreenProps<RootStackParamList, "MealDetail">;
 
@@ -11,7 +11,7 @@ export default function MealDetail({ route, navigation }: MealDetailProps) {
   const mealId = route?.params?.mealId;
   const meal = MEALS.find((meal) => meal.id === mealId);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const mealTitle = meal?.title;
 
     navigation.setOptions({
@@ -47,7 +47,9 @@ export default function MealDetail({ route, navigation }: MealDetailProps) {
         </View>
 
         <View style={styles.listContainer}>
-          <Text style={styles.listTitle}>Ingredients:</Text>
+          <View style={styles.listTitleContainer}>
+            <Text style={styles.listTitle}>Ingredients</Text>
+          </View>
           {meal?.ingredients.map((ingredient, index) => (
             <Text key={index} style={styles.listItem}>
               {index + 1}: {ingredient}
@@ -55,7 +57,9 @@ export default function MealDetail({ route, navigation }: MealDetailProps) {
           ))}
         </View>
         <View style={styles.listContainer}>
-          <Text style={styles.listTitle}>Steps:</Text>
+          <View style={styles.listTitleContainer}>
+            <Text style={styles.listTitle}>Steps</Text>
+          </View>
           {meal?.steps.map((step, index) => (
             <Text key={index} style={styles.listItem}>
               {index + 1}: {step}
@@ -108,9 +112,17 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
+  listTitleContainer: {
+    paddingBottom: 10,
+    marginBottom: 10,
+    borderBottomColor: ColorScheme.primary,
+    borderBottomWidth: 2,
+  },
+
   listTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
     color: ColorScheme.primary,
   },
 

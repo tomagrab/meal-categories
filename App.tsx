@@ -14,7 +14,7 @@ export default function App() {
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator
         screenOptions={{
-          headerBackTitleVisible: false,
+          headerBackTitle: "Back",
         }}
       >
         <Stack.Screen
