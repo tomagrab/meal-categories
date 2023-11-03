@@ -5,6 +5,7 @@ import { RootStackParamList } from "../../Types/Types";
 import Meal from "../../models/meal";
 import MealItem from "../../components/Layout/Meals/MealItem/MealItem";
 import { useLayoutEffect } from "react";
+import { GlobalStyles } from "../../Constants/Style/GlobalStyles";
 
 type MealsOverviewProps = NativeStackScreenProps<RootStackParamList, "Meals">;
 
@@ -45,7 +46,7 @@ export default function MealsOverview({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.container}>
       <FlatList
         data={meals}
         keyExtractor={(item) => item.id}
@@ -54,10 +55,3 @@ export default function MealsOverview({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

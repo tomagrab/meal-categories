@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View, Platform } from "react-native";
+import { GlobalStyles } from "../../../../Constants/Style/GlobalStyles";
 
 type CategoryGridTileProps = {
   title: string;
@@ -16,8 +17,8 @@ export default function CategoryGridTile({
       <Pressable
         android_ripple={{ color: "#ccc" }}
         style={({ pressed }) => [
-          styles.button,
-          pressed ? styles.buttonPressed : null,
+          GlobalStyles.button,
+          pressed ? GlobalStyles.buttonPressed : null,
         ]}
         onPress={onPress}
       >
@@ -42,14 +43,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     borderRadius: 10,
-  },
-
-  button: {
-    flex: 1,
-  },
-
-  buttonPressed: {
-    opacity: 0.5,
   },
 
   innerContainer: {

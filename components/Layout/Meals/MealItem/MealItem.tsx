@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { ColorScheme } from "../../../../Constants/ColorScheme/ColorScheme";
 import Capitalize from "../../../../Utils/Capitalize";
+import { GlobalStyles } from "../../../../Constants/Style/GlobalStyles";
 
 type MealItemProps = {
   onPress: () => void;
@@ -31,8 +32,8 @@ export default function MealItem({
       <Pressable
         android_ripple={{ color: "#ccc" }}
         style={({ pressed }) => [
-          styles.button,
-          pressed ? styles.buttonPressed : null,
+          GlobalStyles.button,
+          pressed ? GlobalStyles.buttonPressed : null,
         ]}
         onPress={onPress}
       >
@@ -80,14 +81,6 @@ const styles = StyleSheet.create({
   mealItemInnerContainer: {
     borderRadius: 10,
     overflow: "hidden",
-  },
-
-  button: {
-    flex: 1,
-  },
-
-  buttonPressed: {
-    opacity: 0.5,
   },
 
   mealItemTitle: {

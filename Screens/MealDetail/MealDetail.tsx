@@ -4,6 +4,7 @@ import { RootStackParamList } from "../../Types/Types";
 import { MEALS } from "../../Data/dummy-data";
 import { ColorScheme } from "../../Constants/ColorScheme/ColorScheme";
 import { useLayoutEffect } from "react";
+import { GlobalStyles } from "../../Constants/Style/GlobalStyles";
 
 type MealDetailProps = NativeStackScreenProps<RootStackParamList, "MealDetail">;
 
@@ -20,7 +21,7 @@ export default function MealDetail({ route, navigation }: MealDetailProps) {
   }, [mealId, navigation]);
 
   return (
-    <View style={styles.mealItemContainer}>
+    <View style={GlobalStyles.container}>
       <ScrollView>
         <View style={styles.mealItemImage}>
           <Image
