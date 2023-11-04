@@ -11,6 +11,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import FavoritesContextProvider from "./Store/Context/favorites-context";
+import { Provider } from "react-redux";
+import { store } from "./Store/Redux/store";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
@@ -44,7 +46,8 @@ function DrawerMavigation() {
 
 export default function App() {
   return (
-    <FavoritesContextProvider>
+    // <FavoritesContextProvider>
+    <Provider store={store}>
       <NavigationContainer theme={MyTheme}>
         <Stack.Navigator
           screenOptions={{
@@ -71,7 +74,8 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </FavoritesContextProvider>
+    </Provider>
+    // </FavoritesContextProvider>
   );
 }
 

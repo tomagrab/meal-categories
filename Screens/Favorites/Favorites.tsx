@@ -10,6 +10,8 @@ import {
 } from "@react-navigation/native-stack";
 import { RootDrawerParamList, RootStackParamList } from "../../Types/Types";
 import { ColorScheme } from "../../Constants/ColorScheme/ColorScheme";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/Redux/store";
 
 type FavoritesScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -17,8 +19,12 @@ type FavoritesScreenProps = NativeStackScreenProps<
 >;
 
 export default function FavoritesScreen({ navigation }: FavoritesScreenProps) {
-  const favoriteMealsCTX = useContext(FavoritesContext);
-  const favoriteMeals = favoriteMealsCTX.ids;
+  /* const favoriteMealsCTX = useContext(FavoritesContext);
+  const favoriteMeals = favoriteMealsCTX.ids; */
+
+  const favoriteMeals = useSelector(
+    (state: RootState) => state.favoriteMeals.ids
+  );
 
   const meals = MEALS.filter((meal) => favoriteMeals.includes(meal.id));
 

@@ -7,21 +7,32 @@ import { useContext, useLayoutEffect } from "react";
 import { GlobalStyles } from "../../Constants/Style/GlobalStyles";
 import IconButton from "../../components/UI/IconButton/IconButton";
 import { FavoritesContext } from "../../Store/Context/favorites-context";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../Store/Redux/store";
+import { addFavorite, removeFavorite } from "../../Store/Redux/favorites";
 
 type MealDetailProps = NativeStackScreenProps<RootStackParamList, "MealDetail">;
 
 export default function MealDetail({ route, navigation }: MealDetailProps) {
-  const favoriteMealsCTX = useContext(FavoritesContext);
+  // const favoriteMealsCTX = useContext(FavoritesContext);
+  const favoriteMealIds = useSelector(
+    (state: RootState) => state.favoriteMeals.ids
+  );
+
+  const dispatch = useDispatch();
 
   const mealId = route?.params?.mealId;
   const meal = MEALS.find((meal) => meal.id === mealId);
-  const mealIsFavorite = favoriteMealsCTX.ids.includes(mealId);
+  // const mealIsFavorite = favoriteMealsCTX.ids.includes(mealId);
+  const mealIsFavorite = favoriteMealIds.includes(mealId);
 
   function headerButtonPressHandler() {
     if (mealIsFavorite) {
-      favoriteMealsCTX.removeFavorite(mealId);
+      // favoriteMealsCTX.removeFavorite(mealId);
+      dispatch(removeFavorite({ id: mealId }));
     } else {
-      favoriteMealsCTX.addFavorite(mealId);
+      // favoriteMealsCTX.addFavorite(mealId);
+      dispatch(addFavorite({ id: mealId }));
     }
   }
 
