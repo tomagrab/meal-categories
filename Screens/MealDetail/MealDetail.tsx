@@ -3,22 +3,45 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { RootStackParamList } from "../../Types/Types";
 import { MEALS } from "../../Data/dummy-data";
 import { ColorScheme } from "../../Constants/ColorScheme/ColorScheme";
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { GlobalStyles } from "../../Constants/Style/GlobalStyles";
+import IconButton from "../../components/UI/IconButton/IconButton";
+import { FavoritesContext } from "../../Store/Context/favorites-context";
 
 type MealDetailProps = NativeStackScreenProps<RootStackParamList, "MealDetail">;
 
 export default function MealDetail({ route, navigation }: MealDetailProps) {
+  const favoriteMealsCTX = useContext(FavoritesContext);
+
   const mealId = route?.params?.mealId;
   const meal = MEALS.find((meal) => meal.id === mealId);
+  const mealIsFavorite = favoriteMealsCTX.ids.includes(mealId);
+
+  function headerButtonPressHandler() {
+    if (mealIsFavorite) {
+      favoriteMealsCTX.removeFavorite(mealId);
+    } else {
+      favoriteMealsCTX.addFavorite(mealId);
+    }
+  }
 
   useLayoutEffect(() => {
     const mealTitle = meal?.title;
 
     navigation.setOptions({
       title: mealTitle,
+      headerRight: () => {
+        return (
+          <IconButton
+            onPress={headerButtonPressHandler}
+            icon="star"
+            size={24}
+            color={mealIsFavorite ? ColorScheme.gold : ColorScheme.neutral}
+          />
+        );
+      },
     });
-  }, [mealId, navigation]);
+  }, [mealId, navigation, headerButtonPressHandler]);
 
   return (
     <View style={GlobalStyles.container}>
@@ -73,11 +96,6 @@ export default function MealDetail({ route, navigation }: MealDetailProps) {
 }
 
 const styles = StyleSheet.create({
-  mealItemContainer: {
-    flex: 1,
-    padding: 16,
-  },
-
   mealItemImage: {
     borderRadius: 10,
     overflow: "hidden",
@@ -128,8 +146,13 @@ const styles = StyleSheet.create({
   },
 
   listItem: {
+    marginVertical: 10,
     fontSize: 16,
     paddingVertical: 5,
-    color: ColorScheme.secondary,
+    paddingHorizontal: 10,
+    color: ColorScheme.neutral,
+    backgroundColor: ColorScheme.secondary,
+    borderRadius: 10,
+    overflow: "hidden",
   },
 });

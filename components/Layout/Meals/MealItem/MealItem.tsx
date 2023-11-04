@@ -9,9 +9,12 @@ import {
 import { ColorScheme } from "../../../../Constants/ColorScheme/ColorScheme";
 import Capitalize from "../../../../Utils/Capitalize";
 import { GlobalStyles } from "../../../../Constants/Style/GlobalStyles";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../../../Types/Types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type MealItemProps = {
-  onPress: () => void;
+  id: string;
   title: string;
   image: string;
   duration: number;
@@ -20,13 +23,22 @@ type MealItemProps = {
 };
 
 export default function MealItem({
-  onPress,
+  id,
   title,
   image,
   duration,
   complexity,
   affordability,
 }: MealItemProps) {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  function selectMeal() {
+    navigation.navigate("MealDetail", {
+      mealId: id,
+    });
+  }
+
   return (
     <View style={styles.mealItemCard}>
       <Pressable
@@ -35,7 +47,7 @@ export default function MealItem({
           GlobalStyles.button,
           pressed ? GlobalStyles.buttonPressed : null,
         ]}
-        onPress={onPress}
+        onPress={selectMeal}
       >
         <View style={styles.mealItemInnerContainer}>
           <Image
@@ -86,7 +98,7 @@ const styles = StyleSheet.create({
   mealItemTitle: {
     fontSize: 18,
     color: "white",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: ColorScheme.primary,
     paddingVertical: 10,
     textAlign: "center",
   },
